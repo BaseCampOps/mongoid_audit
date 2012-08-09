@@ -48,6 +48,7 @@ class Audit
       self.old_values[key] = record.changes[key].first
       self.new_values[key] = record.changes[key].last
     end
+    self.changed_keys
   end
   
   # Extracts changes and document id and type and saves those changes to an audit record
@@ -61,9 +62,9 @@ class Audit
   end
   
   # Normally used on destroy. Saves ALL field and their values, regardless of whether they were changed or not.
+  # GOTCHA: Does not save fields in :unauditable_fields
   def save_all_fields_from_record(record)
     self.save_base_attributes(record)
-    logger.info "Going to save all fields from this record"
     self.changed_keys = record.attributes.keys
     self.old_values ||= Hash.new
     self.new_values ||= Hash.new
@@ -101,6 +102,7 @@ class Audit
   
   # Goes through the black/white list of attributes
   # Will check the records :auditable_attributes or :unauditable_attributes instance methods
+  # The only thing the record is used for is to pull out the auditable_attributes/unauditable_attributes
   def filter_attributes(record)
     self.changed_keys ||= []
     if !record.auditable_attributes.nil?
@@ -110,20 +112,24 @@ class Audit
       self.changed_keys -= record.unauditable_attributes
     end
     self.changed_keys -= %w{updated_at created_at _id}
-    self.changed_keys 
+    self.changed_keys
   end
   
   
   # callbacks
   
   def set_current_user
-    if Rails.env == 'development'
-      user = User.current
-      if user
-        self.user_id = user[:id]
-        self.user_ip = user[:ip]
-        self.user_fullname = "#{user[:first_name]} #{user[:last_name]}"
+    begin
+      if Rails.env == 'development'
+        user = User.current
+        if user
+          self.user_id = user[:id]
+          self.user_ip = user[:ip]
+          self.user_fullname = "#{user[:first_name]} #{user[:last_name]}"
+        end
       end
+    rescue
+      logger.info "Not in Rails or we don't have a User model"
     end
   end
   

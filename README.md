@@ -1,12 +1,14 @@
 # MongoidAudit
 
-TODO: Write a gem description
+Easily add auditing to your app. Just include which fields you want auditable and it will track creates, updates and deletes for those fields
 
 
 ## Usage
 
 How to use this model to log changes
+
 Example - Put this in the models you want to audit
+
       auditable_fields :all # Tracks all fields
       auditable_fields :email, :name # Tracks just these fields
       auditable_fields :all, :except => [:password, :password_confirmation] #Tracks all fields, except the listed

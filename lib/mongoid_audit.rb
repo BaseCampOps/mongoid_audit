@@ -33,6 +33,7 @@ module MongoidAudit
       self.set_audit_callbacks
     end
     
+    # Sets the callbacks for documents in the collection
     def set_audit_callbacks
       self.set_callback(:save, :before) do |record|
         if record.changed? && record.valid?
@@ -51,6 +52,7 @@ module MongoidAudit
     end
   end
   
+  # Convenience methods to get audits for instances of Monogid documents
   def audits
     document_type = self.class.name.underscore
     document_id = self.id
@@ -65,7 +67,7 @@ module MongoidAudit
   end
 end
 
-# This adds the option to audit to all Mongoid Collections
+# This adds the OPTION to audit to all Mongoid Collections
 module Mongoid::Document
   include MongoidAudit
 end
