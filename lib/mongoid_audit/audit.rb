@@ -119,9 +119,11 @@ class Audit
   def set_current_user
     if Rails.env == 'development'
       user = User.current
-      self.user_id = user[:id]
-      self.user_ip = user[:ip]
-      self.user_fullname = "#{user[:first_name]} #{user[:last_name]}"
+      if user
+        self.user_id = user[:id]
+        self.user_ip = user[:ip]
+        self.user_fullname = "#{user[:first_name]} #{user[:last_name]}"
+      end
     end
   end
   
