@@ -1,4 +1,6 @@
 require "mongoid_audit/version"
+require File.join(File.dirname(__FILE__), 'mongoid_audit/audit')
+#require File.expand_path(File.dirname(__FILE__) + '/mongoid_audit/audit')
 
 module MongoidAudit
   extend ActiveSupport::Concern
@@ -61,4 +63,9 @@ module MongoidAudit
     end
     Audit.where(:base_document_type => document_type, :base_document_id => document_id).desc(:created_at)
   end
+end
+
+# This adds the option to audit to all Mongoid Collections
+module Mongoid::Document
+  include MongoidAudit
 end
