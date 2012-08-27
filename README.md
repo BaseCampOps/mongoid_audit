@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/BaseCampOps/mongoid_audit)
+
 # MongoidAudit
 
 Easily add auditing to your app. Just include which fields you want auditable and it will track creates, updates and deletes for those fields
@@ -20,6 +22,24 @@ for every auditable model you can call 'audits' on a record to view that records
 Example: 
       Deal.first.audits # Returns an array of audits for that deal
       
+## Fields in the audit records
+
+      #Used to store what the change was made to 
+      field :document_type, type:String
+      field :base_document_type, type:String
+      field :document_id, type:Moped::BSON::ObjectId
+      field :base_document_id, type:Moped::BSON::ObjectId
+      # The fields that you will use most often
+      field :changed_keys, type:Array
+      field :old_values, type:Hash
+      field :new_values, type:Hash
+      field :log_type, type:String, default:"changed"
+      
+      # User information. Only available if you have a method in a user model called current_user 
+      # hat return the current user
+      field :user_id, type:Moped::BSON::ObjectId
+      field :user_ip, type:String
+      field :user_fullname, type:String
       
 ## Gotchas
 
