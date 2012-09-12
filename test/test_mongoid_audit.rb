@@ -25,6 +25,7 @@ class TestMongoidAudit < Test::Unit::TestCase
   
   def teardown
     User.destroy_all
+    Deal.destroy_all
     Audit.destroy_all
   end
   

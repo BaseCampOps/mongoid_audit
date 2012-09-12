@@ -18,7 +18,6 @@ class Audit
   # Should be made into a gem instead at some point
   
   #Fields
-  field :user_ip, type:String
   #Used to store what the change was made to 
   field :document_type, type:String
   field :base_document_type, type:String
@@ -120,7 +119,7 @@ class Audit
   
   def set_current_user
     begin
-      if Rails.env == 'development'
+      if Rails.env == 'development' || Rails.env == 'production'
         user = User.current
         if user
           self.user_id = user[:id]

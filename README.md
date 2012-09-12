@@ -19,7 +19,9 @@ The callbacks are automatically added for before update and after destroy
 
 
 for every auditable model you can call 'audits' on a record to view that records audits
+
 Example: 
+
       Deal.first.audits # Returns an array of audits for that deal
       
 ## Fields in the audit records
