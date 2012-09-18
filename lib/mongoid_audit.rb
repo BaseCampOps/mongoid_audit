@@ -1,6 +1,6 @@
+begin; require 'kaminari'; rescue LoadError; end
 require "mongoid_audit/version"
 require File.join(File.dirname(__FILE__), 'mongoid_audit/audit')
-#require File.expand_path(File.dirname(__FILE__) + '/mongoid_audit/audit')
 
 module MongoidAudit
   extend ActiveSupport::Concern
@@ -8,10 +8,6 @@ module MongoidAudit
   included do
     mattr_accessor :auditable_attributes
     mattr_accessor :unauditable_attributes
-#    if defined? ::Kaminari
-#      ::Mongoid::Criteria.send :include, Kaminari::MongoidExtension::Criteria
-#      ::Mongoid::Document.send :include, Kaminari::MongoidExtension::Document
-#    end
   end
 
   module ClassMethods
@@ -74,4 +70,9 @@ end
 # This adds the OPTION to audit to all Mongoid Collections
 module Mongoid::Document
   include MongoidAudit
+  if defined? ::Kaminari
+    Kaminari::Hooks.init
+    Audit.send :include, Kaminari::MongoidExtension::Criteria
+    Audit.send :include, Kaminari::MongoidExtension::Document
+  end
 end
