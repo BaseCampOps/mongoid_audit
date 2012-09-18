@@ -8,6 +8,10 @@ module MongoidAudit
   included do
     mattr_accessor :auditable_attributes
     mattr_accessor :unauditable_attributes
+#    if defined? ::Kaminari
+#      ::Mongoid::Criteria.send :include, Kaminari::MongoidExtension::Criteria
+#      ::Mongoid::Document.send :include, Kaminari::MongoidExtension::Document
+#    end
   end
 
   module ClassMethods

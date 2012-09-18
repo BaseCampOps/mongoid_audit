@@ -1,6 +1,8 @@
 class Audit
   include Mongoid::Document
   include Mongoid::Timestamps
+  ::Mongoid::Criteria.send :include, Kaminari::MongoidExtension::Criteria
+  ::Mongoid::Document.send :include, Kaminari::MongoidExtension::Document
   
   
   # How to use this model to log changes
