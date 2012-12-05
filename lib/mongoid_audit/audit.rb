@@ -142,9 +142,9 @@ class Audit
     if controller == 'deals'
       suffix = '/collect_data'
     end
-    url = controller + '/' + self.base_document_id.to_s + suffix
+    path = controller + '/' + self.base_document_id.to_s + suffix
     klass = self.base_document_type.constantize
-    klass.respond_to?(:audit_url) ? klass.audit_url(base_document_id) : url
+    return klass.respond_to?(:audit_url) ? klass.audit_url(base_document_id) : path
   end
   
   # Some finders
