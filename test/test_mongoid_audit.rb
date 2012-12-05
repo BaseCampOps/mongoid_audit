@@ -58,4 +58,14 @@ class TestMongoidAudit < Test::Unit::TestCase
     assert_equal 1, @user.audits.count
   end
   
+  def test_default_audit_url
+    audit = Audit.new(:base_document_type => "user", :base_document_id => "1234")
+    assert_equal "users/1234", audit.url
+  end
+  
+  def test_custom_audit_url
+    audit = Audit.new(:base_document_type => "deal", :base_document_id => "1234")
+    assert_equal "deals/1234/collect_data", audit.url
+  end
+  
 end

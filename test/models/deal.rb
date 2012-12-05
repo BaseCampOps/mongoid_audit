@@ -10,5 +10,5 @@ class Deal
   
   #Do not track changes to these fields
   auditable_fields :all, :except => [:secret_field, :user_id]
-
+  
 end

@@ -143,8 +143,10 @@ class Audit
       suffix = '/collect_data'
     end
     path = controller + '/' + self.base_document_id.to_s + suffix
-    klass = self.base_document_type.constantize
+    klass = self.base_document_type.camelize.constantize
     return klass.respond_to?(:audit_url) ? klass.audit_url(base_document_id) : path
+  rescue NameError
+    path
   end
   
   # Some finders
