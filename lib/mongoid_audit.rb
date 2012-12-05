@@ -28,6 +28,7 @@ module MongoidAudit
           self.auditable_attributes << field.to_s
         end
       end
+      
       # Makes sure that all fields are set. Fixes bug e.g. auditable_fields :all, :another_field
       self.auditable_attributes = nil if all_fields
       self.set_audit_callbacks

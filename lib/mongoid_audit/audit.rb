@@ -135,14 +135,16 @@ class Audit
   
   # Used to output the correct url
   def url
-    # NOTE: May be suedful to get the class for the base_document_type and see if it respond_to base.
+    # NOTE: May be useful to get the class for the base_document_type and see if it respond_to base.
     # If so call that to make sure we really are at the top parent!
     controller = self.base_document_type.pluralize
     suffix = ''
     if controller == 'deals'
       suffix = '/collect_data'
     end
-    controller + '/' + self.base_document_id.to_s + suffix
+    url = controller + '/' + self.base_document_id.to_s + suffix
+    klass = self.base_document_type.constantize
+    klass.respond_to?(:audit_url) ? klass.audit_url(base_document_id) : url
   end
   
   # Some finders
