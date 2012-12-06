@@ -138,11 +138,7 @@ class Audit
     # NOTE: May be useful to get the class for the base_document_type and see if it respond_to base.
     # If so call that to make sure we really are at the top parent!
     controller = self.base_document_type.pluralize
-    suffix = ''
-    if controller == 'deals'
-      suffix = '/collect_data'
-    end
-    path = controller + '/' + self.base_document_id.to_s + suffix
+    path = "#{controller}/#{self.base_document_id.to_s}"
     klass = self.base_document_type.camelize.constantize
     return klass.respond_to?(:audit_url) ? klass.audit_url(base_document_id) : path
   rescue NameError

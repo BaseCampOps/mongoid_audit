@@ -11,4 +11,8 @@ class Deal
   #Do not track changes to these fields
   auditable_fields :all, :except => [:secret_field, :user_id]
   
+  def self.audit_url(id)
+    "deals/#{id.to_s}/collect_data"
+  end
+  
 end
