@@ -139,10 +139,10 @@ class Audit
     # If so call that to make sure we really are at the top parent!
     controller = self.base_document_type.pluralize
     path = "#{controller}/#{self.base_document_id.to_s}"
-    klass = self.base_document_type.camelize.constantize
-    base_klass = self.base_document_type.camelize.constantize
+    klass = self.document_type.to_s.camelize.constantize
+    base_klass = self.base_document_type.to_s.camelize.constantize
     has_custom_url_method = klass.respond_to?(:audit_url) || base_klass.respond_to?(:audit_url)
-    klass_with_custom_url = klass.respond_to?(:audit_url) ? klass : base_klass
+    klass_with_custom_url = klass.respond_to?(:audit_url) ? klass : base_klass;
     return has_custom_url_method ? klass_with_custom_url.audit_url(base_document_id) : path
   rescue NameError
     path
