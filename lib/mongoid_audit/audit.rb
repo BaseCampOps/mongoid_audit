@@ -43,13 +43,9 @@ class Audit
     self.filter_attributes(record)
     self.old_values ||= Hash.new
     self.new_values ||= Hash.new
-    puts "Record to audit: #{record.inspect}"
-    puts "Changes #{record.changes.inspect}"
-    puts "Changed #{record.changed.inspect}"
     record.changed.each do |key|
-      puts "The key is: #{key}"
-      self.old_values[key] = record.changes[key.to_s].first
-      self.new_values[key] = record.changes[key.to_s].last
+      self.old_values[key] = record.changes[key.to_s].try(:first)
+      self.new_values[key] = record.changes[key.to_s].try(:last)
     end
     self.changed_keys
   end
