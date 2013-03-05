@@ -13,9 +13,9 @@ Example - Put this in the models you want to audit
 
       auditable_fields :all # Tracks all fields
       auditable_fields :email, :name # Tracks just these fields
-      auditable_fields :all, :except => [:password, :password_confirmation] #Tracks all fields, except the listed
+      auditable_fields :all, :except => [:password, :password_confirmation] # Tracks all fields, except the listed
 
-The callbacks are automatically added for before update and after destroy
+The callbacks are automatically added for before_update and after_destroy
 
 
 for every auditable model you can call 'audits' on a record to view that records audits
@@ -37,8 +37,8 @@ Example:
       field :new_values, type:Hash
       field :log_type, type:String, default:"changed"
       
-      # User information. Only available if you have a method in a user model called current_user 
-      # hat return the current user
+      # User information. Only available if you have a class method in a User model called current (e.g. User.current) 
+      # that returns the current user
       field :user_id, type:Moped::BSON::ObjectId
       field :user_ip, type:String
       field :user_fullname, type:String
@@ -47,6 +47,8 @@ Example:
 
 When a document is destroyed it will create an audit entry for that document and will also keep all other audit entries
 for that document. If you don't want the old audit entries you must manually destroy them.
+
+This is intended behavior, but something to be aware of nonetheless.
 
 
 ## Contributing
