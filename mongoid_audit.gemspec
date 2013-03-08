@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = MongoidAudit::VERSION
   
-  gem.add_dependency "mongoid", "~> 3.0.0"
+  gem.add_dependency "mongoid", "~> 3.1.2"
   gem.add_dependency "activesupport", "~> 3.2.6"
   
   gem.add_development_dependency "minitest"
